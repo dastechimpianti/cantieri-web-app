@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 
 export default function CantieriApp() {
+  console.log("Rendering CantieriApp"); // Log per verificare il rendering
+
   const [formData, setFormData] = useState({ data: "", operaio: "", cantiere: "", mezzo: "" });
 
   const handleChange = (e) => {

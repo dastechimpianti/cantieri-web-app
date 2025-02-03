@@ -12,7 +12,7 @@ export default function CantieriApp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch("https://script.google.com/macros/s/AKfycbzQvvPrlhho5SMtcaiO3U4B5Ey7xdNmecIZbxkwWJRTUGeZu6p4QPKFgy63PI4AS6lT/exec", {
+    const response = await fetch("https://script.google.com/macros/s/AKfycbw1YmZ87afwL_SedP2HPagM0pXMOqct4XIXlneUujs/dev", {
       method: "POST",
       body: JSON.stringify(formData),
       headers: { "Content-Type": "application/json" }

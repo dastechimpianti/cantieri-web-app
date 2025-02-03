@@ -19,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/dastechimpianti/cantieri-web-app/issues"
   },
-  "homepage": "https://vercel.com/stefanos-projects-e84655d3/cantieri-web-app",
+  "homepage": "https://cantieri-web-app.vercel.app/",
   "dependencies": {
     "@svgr/plugin-svgo": "^8.1.0",
     "@svgr/webpack": "^8.1.0",

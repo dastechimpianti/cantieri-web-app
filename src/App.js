@@ -1,48 +1,38 @@
-import React, { useState, useEffect } from 'react';
-import './App.css';
+import React, { useState } from 'react';
 
-export default function OperaiApp() {
-  const [data, setData] = useState([]);
+export default function CantieriApp() {
+  const [formData, setFormData] = useState({ data: "", operaio: "", cantiere: "", mezzo: "" });
 
-  useEffect(() => {
-    fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vS64lCdqrw4WoN2GxST1UHsOxGJqekmaIZbzYaBeeo5wbRkexM2RcvPSvXb4Qy4acgjOXs1cdYfWyGS/pub?output=csv")
-      .then(response => response.text())
-      .then(csv => {
-        const rows = csv.split("\n").map(row => row.split(","));
-        const values = rows.slice(1);
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-        setData(values.map(row => ({
-          data: row[0],
-          operaio: row[1],
-          cantiere: row[2],
-          mezzo: row[3]
-        })));
-      });
-  }, []);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const response = await fetch("https://script.google.com/macros/s/AKfycbzQvvPrlhho5SMtcaiO3U4B5Ey7xdNmecIZbxkwWJRTUGeZu6p4QPKFgy63PI4AS6lT/exec", {
+      method: "POST",
+      body: JSON.stringify(formData),
+      headers: { "Content-Type": "application/json" }
+    });
+
+    if (response.ok) {
+      alert("Dati aggiunti con successo!");
+    } else {
+      alert("Errore nell'invio dei dati.");
+    }
+  };
 
   return (
-    <div className="container mt-5">
-      <h1 className="text-center mb-4">Assegnazioni Operai</h1>
-      <table className="table table-bordered">
-        <thead>
-          <tr>
-            <th>Data</th>
-            <th>Operaio</th>
-            <th>Cantiere</th>
-            <th>Mezzo</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((entry, index) => (
-            <tr key={index}>
-              <td>{entry.data}</td>
-              <td>{entry.operaio}</td>
-              <td>{entry.cantiere}</td>
-              <td>{entry.mezzo}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div>
+      <h1>Gestione Cantieri</h1>
+      <form onSubmit={handleSubmit}>
+        <input type="text" name="data" placeholder="Data" onChange={handleChange} required />
+        <input type="text" name="operaio" placeholder="Operaio" onChange={handleChange} required />
+        <input type="text" name="cantiere" placeholder="Cantiere" onChange={handleChange} required />
+        <input type="text" name="mezzo" placeholder="Mezzo" onChange={handleChange} required />
+        <button type="submit">Aggiungi</button>
+      </form>
     </div>
   );
 }
